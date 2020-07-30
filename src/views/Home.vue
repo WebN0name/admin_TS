@@ -20,7 +20,7 @@
                 :search="search"
                 :items-per-page= 5
                 class="tbl"
-                item-key="orderNumber"
+                item-key="order_id"
                 show-select
                 single-select
             >
@@ -77,144 +77,76 @@ export default {
       {
         text: 'Order number',
         sortable: false,
-        value: 'orderNumber'
-      },
-      {
-        text: 'Customer Code',
-        sortable: false,
-        value: 'customerCode'
+        value: 'order_id'
       },
       {
         text: 'Rejection code',
         sortable: false,
-        value: 'rejCode'
+        value: 'rejection_code'
       },
       {
-        text: 'First POC Nam',
+        text: 'E-mail',
         sortable: false,
-        value: 'firstPOC'
+        value: 'email'
       },
       {
-        text: 'First Owner',
+        text: 'Name',
         sortable: false,
-        value: 'firstOwner'
+        value: 'name'
       },
       {
-        text: 'First phone number',
+        text: 'Phone number',
         sortable: false,
-        value: 'firstPhone'
+        value: 'phone'
       },
       {
-        text: 'First E-mail',
+        text: 'E-mail message',
         sortable: false,
-        value: 'firstEmail'
-      },
-      {
-        text: 'Count SKU',
-        sortable: false,
-        value: 'countSKU'
+        value: 'email_msg'
       }
     ],
 
     items: [
       {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
+        order_id: 9153149286,
+        rejection_code: 'ZP',
+        email: 'oks-8k31@mail.ru',
+        name: 'PerilLa Castro Raul',
+        phone: '79069513035-79994959679',
+        email_msg: 'Content'
       },
       {
-        orderNumber: 9153180888,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
+        order_id: 9153149283,
+        rejection_code: 'ZP',
+        email: 'oks-8k31@mail.ru',
+        name: 'PerilLa Castro Raul',
+        phone: '79069513035-79994959679',
+        email_msg: 'Content'
       },
       {
-        orderNumber: 9153180889,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
+        order_id: 9153149287,
+        rejection_code: 'ZP',
+        email: 'oks-8k31@mail.ru',
+        name: 'PerilLa Castro Raul',
+        phone: '79069513035-79994959679',
+        email_msg: 'Content2'
       },
       {
-        orderNumber: 9153180880,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180890,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
+        order_id: 9153149286,
+        rejection_code: 'ZP',
+        email: 'oks-8k31@mail.ru',
+        name: 'PerilLa Castro Raul',
+        phone: '79069513035-79994959679',
+        email_msg: 'Content3'
       }
     ]
   }),
   watch: {
     selected () {
       if (this.selected[0]) {
-        this.emailToSend = this.selected[0].firstEmail
-        this.phoneToSend = this.selected[0].firstPhone
-        this.messageSendTo = 'message'
+        this.emailToSend = this.selected[0].email
+        this.phoneToSend = this.selected[0].phone
+        this.messageSendTo = this.selected[0].email_msg
       } else {
         this.emailToSend = null
         this.phoneToSend = null
