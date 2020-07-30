@@ -14,11 +14,15 @@
               ></v-text-field>
               <v-spacer></v-spacer>
               <v-data-table
-              :headers="headers"
-              :items="items"
-              :search="search"
-              :items-per-page= 5
-              class="tbl"
+                v-model="selected"
+                :headers="headers"
+                :items="items"
+                :search="search"
+                :items-per-page= 5
+                class="tbl"
+                item-key="orderNumber"
+                show-select
+                single-select
             >
             </v-data-table>
           </div>
@@ -46,6 +50,7 @@ export default {
 
   data: () => ({
     search: '',
+    selected: [],
     headers: [
       {
         text: 'Order number',
