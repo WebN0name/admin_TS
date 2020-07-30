@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="container">
+    <v-container fluid>
       <v-card>
         <div class="header-block">
           <div class="table">
@@ -39,7 +39,26 @@
           </div>
         </div>
       </v-card>
-    </div>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field v-model="emailToSend" label="Email to send" readonly></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field v-model="phoneToSend" label="Phone to send" readonly></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-textarea
+                  v-model="messageSendTo"
+                  name="message"
+                  label="Message text"
+                ></v-textarea>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
   </div>
 </template>
 
@@ -51,6 +70,9 @@ export default {
   data: () => ({
     search: '',
     selected: [],
+    emailToSend: null,
+    phoneToSend: null,
+    messageSendTo: null,
     headers: [
       {
         text: 'Order number',
@@ -186,7 +208,20 @@ export default {
         countSKU: 6
       }
     ]
-  })
+  }),
+  watch: {
+    selected () {
+      if (this.selected[0]) {
+        this.emailToSend = this.selected[0].firstEmail
+        this.phoneToSend = this.selected[0].firstPhone
+        this.messageSendTo = 'message'
+      } else {
+        this.emailToSend = null
+        this.phoneToSend = null
+        this.messageSendTo = null
+      }
+    }
+  }
 }
 </script>
 
