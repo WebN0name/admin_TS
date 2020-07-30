@@ -1,10 +1,30 @@
 <template>
   <div class="home">
     <v-container fluid>
-      <v-card>
-        <div class="header-block">
-          <div class="table">
-              <v-text-field
+      <v-row>
+          <v-col cols="12" md="2">
+            <v-select
+              :items="[9153149286, 9153149287]"
+              label="Order id"
+              @change="setFilter($event, 'order_id')"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" md="2">
+            <v-select
+              :items="['oks-8k31@mail.ru', 'ffdfd']"
+              label="Email"
+              @change="setFilter($event, 'email')"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" md="2">
+            <v-select
+              :items="['PerilLa Castro Raul', 'Name']"
+              label="Name"
+              @change="setFilter($event, 'name')"
+            ></v-select>
+          </v-col>
+          <!--v-col cols="12" md="6">
+           <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
                 label="Search"
@@ -12,7 +32,11 @@
                 hide-details
                 class="search"
               ></v-text-field>
-              <v-spacer></v-spacer>
+          </v-col-->
+        </v-row>
+      <v-card>
+        <div class="header-block">
+          <div class="table">
               <v-data-table
                 v-model="selected"
                 :headers="headers"
@@ -105,7 +129,6 @@ export default {
         value: 'email_msg'
       }
     ],
-
     items: [
       {
         order_id: 9153149286,
@@ -132,15 +155,19 @@ export default {
         email_msg: 'Content2'
       },
       {
-        order_id: 9153149286,
+        order_id: 9153149281,
         rejection_code: 'ZP',
         email: 'oks-8k31@mail.ru',
         name: 'PerilLa Castro Raul',
         phone: '79069513035-79994959679',
         email_msg: 'Content3'
       }
-    ]
+    ],
+    itemsStart: []
   }),
+  mounted () {
+    this.itemsStart = this.items
+  },
   watch: {
     selected () {
       if (this.selected[0]) {
@@ -152,6 +179,14 @@ export default {
         this.phoneToSend = null
         this.messageSendTo = null
       }
+    }
+  },
+  methods: {
+    setFilter (e, name) {
+      console.log(e, name)
+      const result = this.itemsStart.filter(item => item[name] === e)
+      this.items = []
+      this.items = result
     }
   }
 }
@@ -172,6 +207,10 @@ export default {
     height: 100%;
     margin-left: 30px;
     margin-right: 30px;
+  }
+
+  .v-card {
+    padding: 30px 0;
   }
 
   .search{
@@ -205,5 +244,9 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  .buttons .v-btn {
+    margin-bottom: 20px;
   }
 </style>
