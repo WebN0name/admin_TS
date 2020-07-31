@@ -38,6 +38,7 @@
             <v-btn
             class="notify_all custom"
             color="primary"
+            @click="notifyAll"
             >Notify all</v-btn>
             <v-btn
             class="notify_select custom"
@@ -47,6 +48,7 @@
             <v-btn
                 class="notify_all custom"
                 color="primary"
+                @click="toSendReports"
               >Send reports</v-btn>
             <v-switch  label="Send SMS"></v-switch>
             <v-switch  label="Send Email"></v-switch>
@@ -225,7 +227,8 @@ export default {
   methods: {
     ...mapActions([
       'fetchData',
-      'sendData'
+      'sendMessages',
+      'sendReports'
     ]),
     uploadFiles () {
       this.fetchData({
@@ -235,7 +238,15 @@ export default {
     },
     notifySelected () {
       if (this.selected[0]) {
-        this.sendData(this.selected)
+        this.sendMessages(this.selected)
+      }
+    },
+    notifyAll () {
+      this.sendMessages(this.data)
+    },
+    toSendReports () {
+      if (this.selected[0]) {
+        this.sendReports(this.selected)
       }
     }
   }
