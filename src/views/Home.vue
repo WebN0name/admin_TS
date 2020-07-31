@@ -38,14 +38,17 @@
             <v-btn
             class="notify_all custom"
             color="primary"
+            @click="notifyAll"
             >Notify all</v-btn>
             <v-btn
             class="notify_select custom"
             color="primary"
+            @click="notifySelected"
             >Notify selected</v-btn>
             <v-btn
                 class="notify_all custom"
                 color="primary"
+                @click="toSendReports"
               >Send reports</v-btn>
             <v-switch  label="Send SMS"></v-switch>
             <v-switch  label="Send Email"></v-switch>
@@ -63,10 +66,12 @@
           <div class="fields">
             <div class="textfields">
             <v-text-field
+              v-model="emailToSend"
               height="60px"
               placeholder="Write E-mail to send..."
             ></v-text-field>
             <v-text-field
+              v-model="phoneToSend"
               height="60px"
               placeholder="Write Phone to send..."
             ></v-text-field>
@@ -74,11 +79,12 @@
             <input type="text" class="email"> -->
           </div>
               <v-textarea
+                v-model="messageSendTo"
+                :no-resize="false"
                 outlined
                 name="input-7-4"
                 height="120px"
                 label="Customer notification preview:"
-                no-resize="false"
                 value="..."
               ></v-textarea>
           </div>
@@ -210,7 +216,7 @@ export default {
       if (this.selected[0]) {
         this.emailToSend = this.selected[0].email
         this.phoneToSend = this.selected[0].phone
-        this.messageSendTo = this.selected[0].email_msg
+        this.messageSendTo = this.selected[0].email_msgs
       } else {
         this.emailToSend = null
         this.phoneToSend = null
@@ -220,13 +226,28 @@ export default {
   },
   methods: {
     ...mapActions([
-      'fetchData'
+      'fetchData',
+      'sendMessages',
+      'sendReports'
     ]),
     uploadFiles () {
       this.fetchData({
         orders: this.orders,
         customers: this.customers
       })
+    },
+    notifySelected () {
+      if (this.selected[0]) {
+        this.sendMessages(this.selected)
+      }
+    },
+    notifyAll () {
+      this.sendMessages(this.data)
+    },
+    toSendReports () {
+      if (this.selected[0]) {
+        this.sendReports(this.selected)
+      }
     }
   }
 }
