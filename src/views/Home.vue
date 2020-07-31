@@ -22,11 +22,15 @@
             </div>
               <v-spacer></v-spacer>
               <v-data-table
-              :headers="headers"
-              :items="data"
-              :search="search"
-              :items-per-page= 5
-              class="tbl"
+                v-model="selected"
+                :headers="headers"
+                :items="data"
+                :search="search"
+                :items-per-page= 5
+                class="tbl"
+                item-key="order_id"
+                show-select
+                single-select
             >
             </v-data-table>
           </div>
@@ -125,6 +129,10 @@ export default {
   data: () => ({
     orders: null,
     customers: null,
+    selected: [],
+    emailToSend: null,
+    phoneToSend: null,
+    messageSendTo: null,
     dropdown_font: [
       '00:00 AM',
       '01:00 AM',
@@ -198,6 +206,19 @@ export default {
     ...mapState([
       'data'
     ])
+  },
+  watch: {
+    selected () {
+      if (this.selected[0]) {
+        this.emailToSend = this.selected[0].email
+        this.phoneToSend = this.selected[0].phone
+        this.messageSendTo = this.selected[0].email_msg
+      } else {
+        this.emailToSend = null
+        this.phoneToSend = null
+        this.messageSendTo = null
+      }
+    }
   },
   methods: {
     ...mapActions([
