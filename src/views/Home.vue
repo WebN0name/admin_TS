@@ -155,27 +155,27 @@ export default {
       {
         text: 'Order number',
         sortable: false,
-        value: 'orderNumber'
+        value: 'order_id'
       },
       {
         text: 'Customer Code',
         sortable: false,
-        value: 'customerCode'
+        value: 'customer id'
       },
       {
         text: 'Rejection code',
         sortable: false,
-        value: 'rejCode'
+        value: 'rejection_code'
       },
       {
         text: 'POC',
         sortable: false,
-        value: 'firstPOC'
+        value: 'POC name'
       },
       {
         text: 'Owner',
         sortable: false,
-        value: 'firstOwner'
+        value: 'name'
       },
       {
         text: 'DDC',
