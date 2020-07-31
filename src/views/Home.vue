@@ -38,11 +38,7 @@
             <v-btn
             class="notify_all custom"
             color="primary"
-<<<<<<< Updated upstream
             @click="notifyAll"
-=======
-            style="margin-top: 10px"
->>>>>>> Stashed changes
             >Notify all</v-btn>
             <v-btn
             class="notify_select custom"
@@ -93,7 +89,7 @@
               ></v-textarea>
           </div>
           <div class="send">
-            <div class="send-sms">
+            <!-- <div class="send-sms">
               <v-text-field
               height="60px"
               placeholder="Write phone number..."
@@ -103,7 +99,7 @@
             class="send-sms-btn custom"
             color="primary"
             >Send SMS</v-btn>
-            </div>
+            </div> -->
             <div>
               <v-file-input v-model="orders" label="Orders"></v-file-input>
               <v-file-input v-model="customers" label="Customers"></v-file-input>
@@ -260,7 +256,7 @@ export default {
 <style scoped>
   .send-sms{
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
   }
   .fields{
     width: 65%;
