@@ -42,6 +42,7 @@
             <v-btn
             class="notify_select custom"
             color="primary"
+            @click="notifySelected"
             >Notify selected</v-btn>
             <v-btn
                 class="notify_all custom"
@@ -223,13 +224,19 @@ export default {
   },
   methods: {
     ...mapActions([
-      'fetchData'
+      'fetchData',
+      'sendData'
     ]),
     uploadFiles () {
       this.fetchData({
         orders: this.orders,
         customers: this.customers
       })
+    },
+    notifySelected () {
+      if (this.selected[0]) {
+        this.sendData(this.selected)
+      }
     }
   }
 }
