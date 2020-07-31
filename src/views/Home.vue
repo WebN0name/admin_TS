@@ -245,9 +245,7 @@ export default {
       this.sendMessages(this.data)
     },
     toSendReports () {
-      if (this.selected[0]) {
-        this.sendReports(this.selected)
-      }
+      this.sendReports(this.data)
     }
   }
 }
