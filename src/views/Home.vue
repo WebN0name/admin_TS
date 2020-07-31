@@ -63,10 +63,12 @@
           <div class="fields">
             <div class="textfields">
             <v-text-field
+              v-model="emailToSend"
               height="60px"
               placeholder="Write E-mail to send..."
             ></v-text-field>
             <v-text-field
+              v-model="phoneToSend"
               height="60px"
               placeholder="Write Phone to send..."
             ></v-text-field>
@@ -74,11 +76,12 @@
             <input type="text" class="email"> -->
           </div>
               <v-textarea
+                v-model="messageSendTo"
+                :no-resize="false"
                 outlined
                 name="input-7-4"
                 height="120px"
                 label="Customer notification preview:"
-                no-resize="false"
                 value="..."
               ></v-textarea>
           </div>
@@ -210,7 +213,7 @@ export default {
       if (this.selected[0]) {
         this.emailToSend = this.selected[0].email
         this.phoneToSend = this.selected[0].phone
-        this.messageSendTo = this.selected[0].email_msg
+        this.messageSendTo = this.selected[0].email_msgs
       } else {
         this.emailToSend = null
         this.phoneToSend = null
