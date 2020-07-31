@@ -6,19 +6,26 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    data: []
   },
   mutations: {
-  },
-  actions: {
-
-    async Fetch_Data () {
-      axios.post('http://213.219.214.91:5000/fetch_msg_test', {
-        id: 0
-      }).then(r => {
-        console.log(r)
-      })
+    setData (state, data) {
+      state.data = data
     }
   },
-  modules: {
+  actions: {
+    fetchData (context, { orders, customers }) {
+      const formData = new FormData()
+      formData.append('customers', customers)
+      formData.append('orders', orders)
+      axios.post('http://213.219.214.91:5000/fetch_message', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(r => {
+        console.log(r)
+        context.commit('setData', r.data)
+      })
+    }
   }
 })
