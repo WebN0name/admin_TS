@@ -27,13 +27,14 @@ export default new Vuex.Store({
         context.commit('setData', r.data)
       })
     },
-    sendMessages (object) {
+    sendMessages (context, object) {
+      console.log(object)
       axios.post('http://213.219.214.91:5000/send_messages', object)
         .then(r => {
           console.log(r)
         })
     },
-    sendReports (object) {
+    sendReports (context, object) {
       axios.post('http://213.219.214.91:5000/send_reports', object)
         .then(r => {
           console.log(r)
