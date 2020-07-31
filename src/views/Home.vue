@@ -38,7 +38,11 @@
             <v-btn
             class="notify_all custom"
             color="primary"
+<<<<<<< Updated upstream
             @click="notifyAll"
+=======
+            style="margin-top: 10px"
+>>>>>>> Stashed changes
             >Notify all</v-btn>
             <v-btn
             class="notify_select custom"
@@ -105,7 +109,7 @@
               <v-file-input v-model="customers" label="Customers"></v-file-input>
               <v-btn @click="uploadFiles">Import</v-btn>
             </div>
-            <div class="getReported">
+            <!-- <div class="getReported">
                 <v-btn
                   class="notify_all custom"
                   color="primary"
@@ -118,7 +122,7 @@
                 class="notify_all custom"
                 color="primary"
               >import rej codes</v-btn>
-            </div>
+            </div> -->
           </div>
         </div>
     </div>
@@ -382,7 +386,7 @@ export default {
   .send-btns{
     display: flex;
     flex-direction: column;
-    padding-bottom: 33px;
+    padding-bottom: 55px;
   }
 
   .send-input{
