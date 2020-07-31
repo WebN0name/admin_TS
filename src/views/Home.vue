@@ -1,30 +1,17 @@
 <template>
   <div class="home">
-    <v-container fluid>
-      <v-row>
-          <v-col cols="12" md="2">
-            <v-select
-              :items="[9153149286, 9153149287]"
-              label="Order id"
-              @change="setFilter($event, 'order_id')"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" md="2">
-            <v-select
-              :items="['oks-8k31@mail.ru', 'ffdfd']"
-              label="Email"
-              @change="setFilter($event, 'email')"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" md="2">
-            <v-select
-              :items="['PerilLa Castro Raul', 'Name']"
-              label="Name"
-              @change="setFilter($event, 'name')"
-            ></v-select>
-          </v-col>
-          <!--v-col cols="12" md="6">
-           <v-text-field
+    <div class="container">
+      <v-card>
+        <div class="header-block">
+          <div class="table">
+            <div class="filters-wrap">
+              <div class="filters">
+                <v-autocomplete class="motive" placeholder="Rejection motive"></v-autocomplete>
+                <v-autocomplete class="code" placeholder="Code"></v-autocomplete>
+                <v-autocomplete class="region" placeholder="Region"></v-autocomplete>
+                <v-autocomplete class="ddc" placeholder="DDC"></v-autocomplete>
+              </div>
+              <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
                 label="Search"
@@ -32,167 +19,293 @@
                 hide-details
                 class="search"
               ></v-text-field>
-          </v-col-->
-        </v-row>
-      <v-card>
-        <div class="header-block">
-          <div class="table">
+            </div>
+              <v-spacer></v-spacer>
               <v-data-table
-                v-model="selected"
-                :headers="headers"
-                :items="items"
-                :search="search"
-                :items-per-page= 5
-                class="tbl"
-                item-key="order_id"
-                show-select
-                single-select
+              :headers="headers"
+              :items="items"
+              :search="search"
+              :items-per-page= 5
+              class="tbl"
             >
             </v-data-table>
           </div>
           <div class="buttons">
             <v-btn
+            class="notify_all custom"
             color="primary"
             >Notify all</v-btn>
             <v-btn
+            class="notify_select custom"
             color="primary"
-            >Notify select</v-btn>
+            >Notify selected</v-btn>
+            <v-btn
+                class="notify_all custom"
+                color="primary"
+              >Send reports</v-btn>
             <v-switch  label="Send SMS"></v-switch>
             <v-switch  label="Send Email"></v-switch>
-            <v-switch  label="Auto send at:"></v-switch>
+            <div class="setTime">
+            <v-switch  label="Auto send at:" height="74"></v-switch>
+            <v-overflow-btn
+              :items="dropdown_font"
+              label="07:00 AM"
+              target="#dropdown-example"
+              class="my-2"
+            ></v-overflow-btn>
+            </div>
           </div>
         </div>
       </v-card>
-        <v-row>
-          <v-col cols="12" md="6">
-            <v-row>
-              <v-col cols="12" md="6">
-                <v-text-field v-model="emailToSend" label="Email to send" readonly></v-text-field>
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-text-field v-model="phoneToSend" label="Phone to send" readonly></v-text-field>
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-textarea
-                  v-model="messageSendTo"
-                  name="message"
-                  label="Message text"
-                ></v-textarea>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
+        <div class="footer-block">
+          <div class="fields">
+            <div class="textfields">
+            <v-text-field
+              height="60px"
+              placeholder="Write E-mail to send..."
+            ></v-text-field>
+            <v-text-field
+              height="60px"
+              placeholder="Write Phone to send..."
+            ></v-text-field>
+            <!-- <label for="email">E-mail to send:</label>
+            <input type="text" class="email"> -->
+          </div>
+              <v-textarea
+                outlined
+                name="input-7-4"
+                height="120px"
+                label="Customer notification preview:"
+                no-resize="false"
+                value="..."
+              ></v-textarea>
+          </div>
+          <div class="send">
+            <div class="send-sms">
+              <v-text-field
+              height="60px"
+              placeholder="Write phone number..."
+              class="send-sms-field"
+            ></v-text-field>
+            <v-btn
+            class="send-sms-btn custom"
+            color="primary"
+            >Send SMS</v-btn>
+            </div>
+            <div class="getReported">
+                <v-btn
+                  class="notify_all custom"
+                  color="primary"
+                >import orders</v-btn>
+                <v-btn
+                class="notify_all custom"
+                color="primary"
+              >import customers</v-btn>
+              <v-btn
+                class="notify_all custom"
+                color="primary"
+              >import rej codes</v-btn>
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
-
+import { mapActions } from 'vuex'
 export default {
   name: 'Home',
 
   data: () => ({
+    dropdown_font: [
+      '00:00 AM',
+      '01:00 AM',
+      '02:00 AM',
+      '03:00 AM',
+      '04:00 AM',
+      '05:00 AM',
+      '06:00 AM',
+      '07:00 AM',
+      '08:00 AM',
+      '09:00 AM',
+      '10:00 AM',
+      '11:00 AM',
+      '00:00 PM',
+      '01:00 PM',
+      '02:00 PM',
+      '03:00 PM',
+      '04:00 PM',
+      '05:00 PM',
+      '06:00 PM',
+      '07:00 PM',
+      '08:00 PM',
+      '09:00 PM',
+      '10:00 PM',
+      '11:00 PM'],
     search: '',
-    selected: [],
-    emailToSend: null,
-    phoneToSend: null,
-    messageSendTo: null,
     headers: [
       {
         text: 'Order number',
         sortable: false,
-        value: 'order_id'
+        value: 'orderNumber'
+      },
+      {
+        text: 'Customer Code',
+        sortable: false,
+        value: 'customerCode'
       },
       {
         text: 'Rejection code',
         sortable: false,
-        value: 'rejection_code'
+        value: 'rejCode'
       },
       {
-        text: 'E-mail',
+        text: 'POC',
         sortable: false,
-        value: 'email'
+        value: 'firstPOC'
       },
       {
-        text: 'Name',
+        text: 'Owner',
         sortable: false,
-        value: 'name'
+        value: 'firstOwner'
       },
       {
-        text: 'Phone number',
+        text: 'DDC',
         sortable: false,
-        value: 'phone'
+        value: 'DDC'
       },
       {
-        text: 'E-mail message',
+        text: 'Region',
         sortable: false,
-        value: 'email_msg'
+        value: 'region'
+      },
+      {
+        text: 'Count SKU',
+        sortable: false,
+        value: 'countSKU'
       }
     ],
+
     items: [
       {
-        order_id: 9153149286,
-        rejection_code: 'ZP',
-        email: 'oks-8k31@mail.ru',
-        name: 'PerilLa Castro Raul',
-        phone: '79069513035-79994959679',
-        email_msg: 'Content'
+        orderNumber: 9153180887,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
       },
       {
-        order_id: 9153149283,
-        rejection_code: 'ZP',
-        email: 'oks-8k31@mail.ru',
-        name: 'PerilLa Castro Raul',
-        phone: '79069513035-79994959679',
-        email_msg: 'Content'
+        orderNumber: 9153180888,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
       },
       {
-        order_id: 9153149287,
-        rejection_code: 'ZP',
-        email: 'oks-8k31@mail.ru',
-        name: 'PerilLa Castro Raul',
-        phone: '79069513035-79994959679',
-        email_msg: 'Content2'
+        orderNumber: 9153180889,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
       },
       {
-        order_id: 9153149281,
-        rejection_code: 'ZP',
-        email: 'oks-8k31@mail.ru',
-        name: 'PerilLa Castro Raul',
-        phone: '79069513035-79994959679',
-        email_msg: 'Content3'
+        orderNumber: 9153180880,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
+      },
+      {
+        orderNumber: 9153180890,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
+      },
+      {
+        orderNumber: 9153180887,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
+      },
+      {
+        orderNumber: 9153180887,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
+      },
+      {
+        orderNumber: 9153180887,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
+      },
+      {
+        orderNumber: 9153180887,
+        customerCode: 12509687,
+        rejCode: null,
+        firstPOC: 'La Esquina',
+        firstOwner: 'Torres Velandi',
+        firstPhone: 33102458479,
+        firstEmail: 'Haswelvc@yandex.ru',
+        countSKU: 6
       }
-    ],
-    itemsStart: []
+    ]
   }),
-  mounted () {
-    this.itemsStart = this.items
-  },
-  watch: {
-    selected () {
-      if (this.selected[0]) {
-        this.emailToSend = this.selected[0].email
-        this.phoneToSend = this.selected[0].phone
-        this.messageSendTo = this.selected[0].email_msg
-      } else {
-        this.emailToSend = null
-        this.phoneToSend = null
-        this.messageSendTo = null
-      }
-    }
-  },
-  methods: {
-    setFilter (e, name) {
-      console.log(e, name)
-      const result = this.itemsStart.filter(item => item[name] === e)
-      this.items = []
-      this.items = result
-    }
+
+  async mounted(){
+    // this.
   }
+
 }
 </script>
 
 <style scoped>
+  .send-sms{
+    display: flex;
+    align-items: flex-end;
+  }
+  .fields{
+    width: 50%;
+    margin-right: 10px;
+  }
+  .send{
+    width: 50%;
+    margin-top: 60px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  .send-sms-field{
+    width: 90%;
+  }
   .home{
     max-width: 100vw;
     max-height: 100vh;
@@ -209,13 +322,9 @@ export default {
     margin-right: 30px;
   }
 
-  .v-card {
-    padding: 30px 0;
-  }
-
   .search{
-    margin-top: 30px;
-    margin-bottom: 30px;
+    /* margin-top: 30px; */
+    /* margin-bottom: 30px; */
     width: 40%;
   }
 
@@ -246,7 +355,66 @@ export default {
     justify-content: center;
   }
 
-  .buttons .v-btn {
-    margin-bottom: 20px;
+  .footer-block{
+    display: flex;
+    min-width: 68.75rem;
+    width: 100%;
+  }
+  .textfields{
+    margin-top: 60px;
+    display: flex;
+    width: 98%;
+  }
+
+  .v-text-field{
+    padding: 5px;
+  }
+
+  .filters-wrap{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .filters{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .notify_select{
+    margin-top: 10px;
+  }
+
+  .send-sms-btn{
+    margin-bottom: 25px;
+    margin-left: 30px;
+  }
+
+  .getReported{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-side, .right-side{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+  }
+  .setTime{
+    display: flex;
+    align-items: center;
+  }
+
+  .custom{
+    width: 200px;
+  }
+
+  .custom + .custom{
+    margin-top: 30px;
   }
 </style>
