@@ -45,15 +45,13 @@
               >Send reports</v-btn>
             <v-switch  label="Send SMS"></v-switch>
             <v-switch  label="Send Email"></v-switch>
-            <div class="setTime">
-            <v-switch  label="Auto send at:" height="74"></v-switch>
+            <v-switch  label="Auto send at:"></v-switch>
             <v-overflow-btn
               :items="dropdown_font"
               label="07:00 AM"
               target="#dropdown-example"
               class="my-2"
             ></v-overflow-btn>
-            </div>
           </div>
         </div>
       </v-card>
@@ -62,11 +60,11 @@
             <div class="textfields">
             <v-text-field
               height="60px"
-              placeholder="Write E-mail to send..."
+              placeholder="Customer Email"
             ></v-text-field>
             <v-text-field
               height="60px"
-              placeholder="Write Phone to send..."
+              placeholder="Customer Phone"
             ></v-text-field>
             <!-- <label for="email">E-mail to send:</label>
             <input type="text" class="email"> -->
@@ -81,30 +79,24 @@
               ></v-textarea>
           </div>
           <div class="send">
-            <div class="send-sms">
+            <div class="send-input">
               <v-text-field
               height="60px"
-              placeholder="Write phone number..."
+              placeholder="One-time phone number"
               class="send-sms-field"
             ></v-text-field>
-            <v-btn
+            </div>
+            <div class="send-btns">
+              <v-btn
             class="send-sms-btn custom"
             color="primary"
             >Send SMS</v-btn>
-            </div>
+            <v-btn
+                class="notify_all custom"
+                color="primary"
+            >Import CSVs</v-btn>
             <div class="getReported">
-                <v-btn
-                  class="notify_all custom"
-                  color="primary"
-                >import orders</v-btn>
-                <v-btn
-                class="notify_all custom"
-                color="primary"
-              >import customers</v-btn>
-              <v-btn
-                class="notify_all custom"
-                color="primary"
-              >import rej codes</v-btn>
+            </div>
             </div>
           </div>
         </div>
@@ -113,7 +105,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 export default {
   name: 'Home',
 
@@ -181,7 +172,7 @@ export default {
         value: 'region'
       },
       {
-        text: 'Count SKU',
+        text: 'SKU count',
         sortable: false,
         value: 'countSKU'
       }
@@ -279,11 +270,7 @@ export default {
         countSKU: 6
       }
     ]
-  }),
-
-  async mounted(){
-    this.
-  }
+  })
 
 }
 </script>
@@ -294,17 +281,19 @@ export default {
     align-items: flex-end;
   }
   .fields{
-    width: 50%;
+    width: 65%;
     margin-right: 10px;
   }
   .send{
-    width: 50%;
-    margin-top: 60px;
+    width: 30%;
     margin-right: 10px;
-    margin-left: 10px;
+    padding-left: 44px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
   .send-sms-field{
-    width: 90%;
+    width: 200px;
   }
   .home{
     max-width: 100vw;
@@ -361,7 +350,7 @@ export default {
     width: 100%;
   }
   .textfields{
-    margin-top: 60px;
+    margin-top: 15px;
     display: flex;
     width: 98%;
   }
@@ -384,16 +373,11 @@ export default {
     margin-top: 10px;
   }
 
-  .send-sms-btn{
-    margin-bottom: 25px;
-    margin-left: 30px;
-  }
-
   .getReported{
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
   }
 
   .left-side, .right-side{
@@ -416,5 +400,16 @@ export default {
 
   .custom + .custom{
     margin-top: 30px;
+  }
+  .send-btns{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 33px;
+  }
+
+  .send-input{
+    width: 200px;
+    display: flex;
+    justify-content: center;
   }
 </style>
