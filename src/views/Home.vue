@@ -22,11 +22,15 @@
             </div>
               <v-spacer></v-spacer>
               <v-data-table
-              :headers="headers"
-              :items="items"
-              :search="search"
-              :items-per-page= 5
-              class="tbl"
+                v-model="selected"
+                :headers="headers"
+                :items="data"
+                :search="search"
+                :items-per-page= 5
+                class="tbl"
+                item-key="order_id"
+                show-select
+                single-select
             >
             </v-data-table>
           </div>
@@ -60,11 +64,11 @@
             <div class="textfields">
             <v-text-field
               height="60px"
-              placeholder="Customer Email"
+              placeholder="Write E-mail to send..."
             ></v-text-field>
             <v-text-field
               height="60px"
-              placeholder="Customer Phone"
+              placeholder="Write Phone to send..."
             ></v-text-field>
             <!-- <label for="email">E-mail to send:</label>
             <input type="text" class="email"> -->
@@ -79,24 +83,35 @@
               ></v-textarea>
           </div>
           <div class="send">
-            <div class="send-input">
+            <div class="send-sms">
               <v-text-field
               height="60px"
-              placeholder="One-time phone number"
+              placeholder="Write phone number..."
               class="send-sms-field"
             ></v-text-field>
-            </div>
-            <div class="send-btns">
-              <v-btn
+            <v-btn
             class="send-sms-btn custom"
             color="primary"
             >Send SMS</v-btn>
-            <v-btn
+            </div>
+            <div>
+              <v-file-input v-model="orders" label="Orders"></v-file-input>
+              <v-file-input v-model="customers" label="Customers"></v-file-input>
+              <v-btn @click="uploadFiles">Import</v-btn>
+            </div>
+            <div class="getReported">
+                <v-btn
+                  class="notify_all custom"
+                  color="primary"
+                >import orders</v-btn>
+                <v-btn
                 class="notify_all custom"
                 color="primary"
-            >Import CSVs</v-btn>
-            <div class="getReported">
-            </div>
+              >import customers</v-btn>
+              <v-btn
+                class="notify_all custom"
+                color="primary"
+              >import rej codes</v-btn>
             </div>
           </div>
         </div>
@@ -105,10 +120,17 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Home',
 
   data: () => ({
+    orders: null,
+    customers: null,
+    selected: [],
+    emailToSend: null,
+    phoneToSend: null,
+    messageSendTo: null,
     dropdown_font: [
       '00:00 AM',
       '01:00 AM',
@@ -139,27 +161,27 @@ export default {
       {
         text: 'Order number',
         sortable: false,
-        value: 'orderNumber'
+        value: 'order_id'
       },
       {
         text: 'Customer Code',
         sortable: false,
-        value: 'customerCode'
+        value: 'customer id'
       },
       {
         text: 'Rejection code',
         sortable: false,
-        value: 'rejCode'
+        value: 'rejection_code'
       },
       {
         text: 'POC',
         sortable: false,
-        value: 'firstPOC'
+        value: 'POC name'
       },
       {
         text: 'Owner',
         sortable: false,
-        value: 'firstOwner'
+        value: 'name'
       },
       {
         text: 'DDC',
@@ -176,102 +198,37 @@ export default {
         sortable: false,
         value: 'countSKU'
       }
-    ],
-
-    items: [
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180888,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180889,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180880,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180890,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      },
-      {
-        orderNumber: 9153180887,
-        customerCode: 12509687,
-        rejCode: null,
-        firstPOC: 'La Esquina',
-        firstOwner: 'Torres Velandi',
-        firstPhone: 33102458479,
-        firstEmail: 'Haswelvc@yandex.ru',
-        countSKU: 6
-      }
     ]
-  })
-
+  }),
+  computed: {
+    ...mapState([
+      'data'
+    ])
+  },
+  watch: {
+    selected () {
+      if (this.selected[0]) {
+        this.emailToSend = this.selected[0].email
+        this.phoneToSend = this.selected[0].phone
+        this.messageSendTo = this.selected[0].email_msg
+      } else {
+        this.emailToSend = null
+        this.phoneToSend = null
+        this.messageSendTo = null
+      }
+    }
+  },
+  methods: {
+    ...mapActions([
+      'fetchData'
+    ]),
+    uploadFiles () {
+      this.fetchData({
+        orders: this.orders,
+        customers: this.customers
+      })
+    }
+  }
 }
 </script>
 
